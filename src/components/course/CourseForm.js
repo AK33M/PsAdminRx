@@ -9,7 +9,7 @@ const CourseForm = ({course, allAuthors, onSave, onChange, loading, errors}) => 
         <TextInput name="title"
                     label="Title"
                     value={course.title}
-                    onChange="{onChange}"
+                    onChange={onChange}
                     error={errors.title}/>
 
     <SelectInput name="authorId"
@@ -23,16 +23,16 @@ const CourseForm = ({course, allAuthors, onSave, onChange, loading, errors}) => 
       <TextInput name="category"
                     label="Category"
                     value={course.category}
-                    onChange="{onChange}"
+                    onChange={onChange}
                     error={errors.category}/>
                   <TextInput name="length"
                 label="Length"
                 value={course.length}
-                onChange="{onChange}"
+                onChange={onChange}
                 error={errors.length}/>
 
     <input type="submit"
-            disabled="{loading}"
+            disabled={loading}
             value={loading ? 'Saving...' : 'Save'}
             className="btn btn-primary"
             onClick={onSave} />
@@ -45,7 +45,7 @@ CourseForm.propTypes = {
   allAuthors : PropTypes.array,
   onSave : PropTypes.func.isRequired,
   onChange : PropTypes.func.isRequired,
-  loading : PropTypes.bool.isRequired,
+  loading : PropTypes.bool,
   errors : PropTypes.object
 };
 
