@@ -11,9 +11,9 @@ export default(
 	<Route path="/" component={App}>
 		<IndexRoute component={HomePage}/>
 		<Route path="about" component={AboutPage}/>
+		<Route path="authors" component={AuthorsPage}/>
 		<Route path="course/:id" component={ManageCoursePage}/>
     <Route path="course" component={ManageCoursePage}/>
 		<Route path="courses" component={CoursesPage}/>
-		<Route path="authors" component={AuthorsPage}/>
 	</Route>
 );
