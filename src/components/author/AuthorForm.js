@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import TextInput from '../common/TextInput';
 
 const AuthorForm = ({author, onChange, errors}) => {
@@ -30,6 +30,12 @@ const AuthorForm = ({author, onChange, errors}) => {
                />
     </form>
   );
+};
+
+AuthorForm.propTypes = {
+  author : PropTypes.object.isRequired,
+  onChange : PropTypes.func.isRequired,
+  errors : PropTypes.object
 };
 
 export default AuthorForm;
