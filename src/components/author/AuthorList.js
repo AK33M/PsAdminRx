@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const AuthorList = ({authors}) => {
   return (
@@ -12,10 +12,20 @@ const AuthorList = ({authors}) => {
         </tr>
       </thead>
       <tbody>
-
+        {authors.map(author =>
+          <tr key={author.id}>
+            <td></td>
+            <td>{author.id}</td>
+            <td>{author.firstName}</td>
+            <td>{author.lastName}</td>
+          </tr>)}
       </tbody>
     </table>
   );
-}
+};
+
+AuthorList.propTypes = {
+  authors: PropTypes.array
+};
 
 export default AuthorList;
