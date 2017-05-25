@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import AuthorListRow from './AuthorListRow';
 
 const AuthorList = ({authors}) => {
   return (
@@ -12,13 +13,7 @@ const AuthorList = ({authors}) => {
         </tr>
       </thead>
       <tbody>
-        {authors.map(author =>
-          <tr key={author.id}>
-            <td></td>
-            <td>{author.id}</td>
-            <td>{author.firstName}</td>
-            <td>{author.lastName}</td>
-          </tr>)}
+        {authors.map(author => <AuthorListRow key={author.id} author={author} />)}
       </tbody>
     </table>
   );
