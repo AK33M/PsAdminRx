@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import AuthorForm from './AuthorForm';
 import {connect} from 'react-redux';
-import {loadAuthors} from '../../actions/authorActions';
+import {loadAuthors, saveAuthor} from '../../actions/authorActions';
 
 export class ManageAuthorPage extends React.Component {
   constructor(props, context) {
@@ -49,9 +49,9 @@ export class ManageAuthorPage extends React.Component {
       return;
     }
     this.setState({saving: true});
-    this.props.actions.saveAuthor(this.state.author);
+    this.props.saveAuthor(this.state.author);
   }
-  
+
   render() {
     return (
         <AuthorForm author={this.state.author}
@@ -89,6 +89,9 @@ function mapDispatchToProps(dispatch) {
   return {
     loadAuthors: () => {
       dispatch(loadAuthors());
+    },
+    saveAuthor: (author) => {
+      dispatch(saveAuthor(author));
     }
   };
 }
