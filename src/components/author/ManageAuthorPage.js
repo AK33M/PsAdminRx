@@ -1,21 +1,29 @@
 import React, {PropTypes} from 'react';
 import AuthorForm from './AuthorForm';
 import {connect} from 'react-redux';
-import {loadAuthors, saveAuthor} from '../../actions/authorActions';
+import {bindActionCreators} from 'redux';
+import toastr from 'toastr';
+import * as authorActions from '../../actions/authorActions';
 
 export class ManageAuthorPage extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       author: Object.assign({}, props.author),
-      authors: loadAuthors(),
-      saving: false,
       errors: {}
     };
 
     this.updateAuthorState = this.updateAuthorState.bind(this);
     this.saveAuthor = this.saveAuthor.bind(this);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.author.id != nextProps.author.id){
+      this.setState({
+        author: Object.assign({}, nextProps.author)});
+    }
+  }
+
 	updateAuthorState(event) {
 		const field = event.target.name;
 		let author = this.state.author;
@@ -49,7 +57,18 @@ export class ManageAuthorPage extends React.Component {
       return;
     }
     this.setState({saving: true});
-    this.props.saveAuthor(this.state.author);
+    this.props.actions.saveAuthor(this.state.author)
+      .then(() => this.redirect())
+      .catch(error => {
+        toastr.error(error);
+        this.setState({saving: false});
+      });
+  }
+
+  redirect(){
+    this.setState({saving: false});
+    toastr.success('Author saved!');
+    this.context.router.push('/authors');
   }
 
   render() {
@@ -64,7 +83,12 @@ export class ManageAuthorPage extends React.Component {
 }
 
 ManageAuthorPage.propTypes = {
-  author: PropTypes.object.isRequired
+  author: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
+};
+
+ManageAuthorPage.contextTypes ={
+  router: PropTypes.object
 };
 
 function getAuthorById(authors, id) {
@@ -87,12 +111,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadAuthors: () => {
-      dispatch(loadAuthors());
-    },
-    saveAuthor: (author) => {
-      dispatch(saveAuthor(author));
-    }
+    actions: bindActionCreators(authorActions, dispatch)
   };
 }
 
