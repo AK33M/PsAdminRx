@@ -17,4 +17,12 @@ store.dispatch(loadAuthors());
 
 render(
 	<Provider store={store}>
-	<Router history={browserHistory} routes={routes}/></Provider>, document.getElementById('app'));
+		<Router history={browserHistory} routes={routes}/>
+	</Provider>, 
+	document.getElementById('app')
+);
+
+if (process.env.NODE_ENV !== 'production') {
+  const showDevTools = require('./showDevTools');
+  showDevTools.default(store);
+}
